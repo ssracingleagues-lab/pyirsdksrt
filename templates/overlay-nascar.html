@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>iRacing Broadcast Overlay - NASCAR Style</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay-nascar.css') }}">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="overlay-container">
+        <!-- Standings Tower (Right Side) -->
+        <div class="standings-tower" id="standingsTower">
+            <div class="tower-header">
+                <div class="tower-title">RUNNING ORDER</div>
+            </div>
+            <div class="tower-content" id="towerContent">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Driver Info Panel (Top Left) -->
+        <div class="driver-panel" id="driverPanel">
+            <div class="driver-panel-header">
+                <div class="driver-number" id="driverNumber">1</div>
+                <div class="driver-details">
+                    <div class="driver-name" id="driverName">DRIVER NAME</div>
+                    <div class="driver-car" id="driverCar">Car Model</div>
+                </div>
+            </div>
+            <div class="driver-stats">
+                <div class="stat-item">
+                    <span class="stat-label">FASTEST LAP</span>
+                    <span class="stat-value" id="fastestLap">--:--.-</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">LAPS LED</span>
+                    <span class="stat-value" id="lapsLed">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">STARTED</span>
+                    <span class="stat-value" id="startPos">P1</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">CURRENTLY</span>
+                    <span class="stat-value highlight" id="currentPos">P1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Battle Box (Bottom Center) -->
+        <div class="battle-box" id="battleBox">
+            <div class="battle-title">BATTLE FOR POSITION</div>
+            <div class="battle-content">
+                <div class="battle-driver leader">
+                    <div class="battle-pos" id="battleLeaderPos">P2</div>
+                    <div class="battle-info">
+                        <div class="battle-name" id="battleLeaderName">LEADER</div>
+                        <div class="battle-gap" id="battleLeaderGap">INTERVAL</div>
+                    </div>
+                    <div class="battle-time" id="battleLeaderTime">1:23.456</div>
+                </div>
+                
+                <div class="battle-divider">
+                    <div class="battle-arrow">▼</div>
+                    <div class="battle-delta" id="battleDelta">+0.234</div>
+                    <div class="battle-projection" id="battleProjection">PASS IN 3 LAPS</div>
+                </div>
+                
+                <div class="battle-driver chaser">
+                    <div class="battle-pos" id="battleChaserPos">P3</div>
+                    <div class="battle-info">
+                        <div class="battle-name" id="battleChaserName">CHASER</div>
+                        <div class="battle-gap" id="battleChaserGap">INTERVAL</div>
+                    </div>
+                    <div class="battle-time" id="battleChaserTime">1:23.690</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Race Info Bar (Top) -->
+        <div class="race-info-bar" id="raceInfoBar">
+            <div class="info-item">
+                <span class="info-label">TRACK</span>
+                <span class="info-value" id="trackName">Track Name</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">LAP</span>
+                <span class="info-value" id="currentLap">1 / 50</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">TIME</span>
+                <span class="info-value" id="raceTime">00:00</span>
+            </div>
+        </div>
+
+        <!-- Connection Status -->
+        <div class="connection-indicator" id="connectionStatus">
+            <span class="status-dot"></span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/overlay-nascar.js') }}"></script>
+</body>
+</html>

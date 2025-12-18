@@ -88,6 +88,7 @@ function formatTime(seconds) {
 const overlayStyleRadios = document.querySelectorAll('input[name="overlayStyle"]');
 const classicControls = document.getElementById('classicControls');
 const sleekControls = document.getElementById('sleekControls');
+const nascarControls = document.getElementById('nascarControls');
 const openOverlayBtn = document.getElementById('openOverlayBtn');
 
 overlayStyleRadios.forEach(radio => {
@@ -96,13 +97,21 @@ overlayStyleRadios.forEach(radio => {
         if (style === 'classic') {
             classicControls.classList.remove('hidden');
             sleekControls.classList.add('hidden');
+            nascarControls.classList.add('hidden');
             openOverlayBtn.href = '/overlay';
             openOverlayBtn.textContent = 'Open Classic Overlay';
-        } else {
+        } else if (style === 'sleek') {
             classicControls.classList.add('hidden');
             sleekControls.classList.remove('hidden');
+            nascarControls.classList.add('hidden');
             openOverlayBtn.href = '/overlay-sleek';
             openOverlayBtn.textContent = 'Open Sleek Overlay';
+        } else if (style === 'nascar') {
+            classicControls.classList.add('hidden');
+            sleekControls.classList.add('hidden');
+            nascarControls.classList.remove('hidden');
+            openOverlayBtn.href = '/overlay-nascar';
+            openOverlayBtn.textContent = 'Open NASCAR Overlay';
         }
     });
 });
@@ -126,6 +135,13 @@ const sleekSettingCheckboxes = {
     showTrackInfo: document.getElementById('showTrackInfo'),
 };
 
+const nascarSettingCheckboxes = {
+    showStandingsNascar: document.getElementById('showStandingsNascar'),
+    showDriverPanelNascar: document.getElementById('showDriverPanelNascar'),
+    showBattleBoxNascar: document.getElementById('showBattleBoxNascar'),
+    showRaceInfoNascar: document.getElementById('showRaceInfoNascar'),
+};
+
 // Listen for checkbox changes - Classic
 Object.keys(settingCheckboxes).forEach(key => {
     const checkbox = settingCheckboxes[key];
@@ -142,6 +158,16 @@ Object.keys(sleekSettingCheckboxes).forEach(key => {
     if (checkbox) {
         checkbox.addEventListener('change', () => {
             updateSleekSettings();
+        });
+    }
+});
+
+// Listen for checkbox changes - NASCAR
+Object.keys(nascarSettingCheckboxes).forEach(key => {
+    const checkbox = nascarSettingCheckboxes[key];
+    if (checkbox) {
+        checkbox.addEventListener('change', () => {
+            updateNascarSettings();
         });
     }
 });
@@ -171,6 +197,26 @@ function updateSleekSettings() {
         const checkbox = sleekSettingCheckboxes[key];
         if (checkbox) {
             const settingKey = key.replace(/([A-Z])/g, '_$1').toLowerCase();
+            settings[settingKey] = checkbox.checked;
+        }
+    });
+    
+    // Send to server
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(settings),
+    }).catch(err => console.error('Error updating settings:', err));
+}
+
+function updateNascarSettings() {
+    const settings = {};
+    Object.keys(nascarSettingCheckboxes).forEach(key => {
+        const checkbox = nascarSettingCheckboxes[key];
+        if (checkbox) {
+            const settingKey = key.replace(/([A-Z])/g, '_$1').toLowerCase().replace('_nascar', '');
             settings[settingKey] = checkbox.checked;
         }
     });

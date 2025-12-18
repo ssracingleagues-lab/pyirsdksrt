@@ -130,6 +130,11 @@ def overlay_sleek():
     """OBS browser source overlay - Sleek"""
     return render_template('overlay-sleek.html')
 
+@app.route('/overlay-nascar')
+def overlay_nascar():
+    """OBS browser source overlay - NASCAR Style"""
+    return render_template('overlay-nascar.html')
+
 @app.route('/api/status')
 def api_status():
     """API endpoint for current connection status"""
