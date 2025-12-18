@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>iRacing Broadcast Overlay - Sleek</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay-sleek.css') }}">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="overlay-container">
+        <!-- Standings Ticker (Top) -->
+        <div class="standings-ticker" id="standingsTicker">
+            <div class="ticker-header">STANDINGS</div>
+            <div class="ticker-content" id="tickerContent">
+                <div class="ticker-item">
+                    <span class="ticker-pos">1</span>
+                    <span class="ticker-name">Driver Name</span>
+                    <span class="ticker-gap">—</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Driver Info Widget (Top Right) -->
+        <div class="driver-info" id="driverInfo">
+            <div class="driver-header">
+                <span class="driver-pos" id="driverPos">P1</span>
+                <span class="driver-name" id="driverName">Your Name</span>
+            </div>
+            <div class="driver-stats">
+                <div class="stat-row">
+                    <span class="stat-label">SPEED</span>
+                    <span class="stat-value" id="driverSpeed">0</span>
+                    <span class="stat-unit">MPH</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">GEAR</span>
+                    <span class="stat-value large" id="driverGear">N</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">RPM</span>
+                    <div class="rpm-mini-bar">
+                        <div class="rpm-mini-fill" id="rpmMiniFill"></div>
+                    </div>
+                    <span class="stat-value" id="driverRpm">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Battle Box (Middle Right) -->
+        <div class="battle-box" id="battleBox">
+            <div class="battle-header">BATTLE</div>
+            <div class="battle-content">
+                <div class="battle-driver ahead">
+                    <div class="battle-pos" id="battleAheadPos">P2</div>
+                    <div class="battle-name" id="battleAheadName">Driver Ahead</div>
+                    <div class="battle-speed" id="battleAheadSpeed">120</div>
+                    <div class="battle-unit">MPH</div>
+                </div>
+                <div class="battle-delta">
+                    <div class="delta-icon">⚔️</div>
+                    <div class="delta-value" id="battleDelta">+0.5s</div>
+                    <div class="delta-projection" id="battleProjection">—</div>
+                </div>
+                <div class="battle-driver behind">
+                    <div class="battle-pos" id="battleBehindPos">P3</div>
+                    <div class="battle-name" id="battleBehindName">You</div>
+                    <div class="battle-speed" id="battleBehindSpeed">119</div>
+                    <div class="battle-unit">MPH</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lap Info (Bottom Left) -->
+        <div class="lap-info" id="lapInfo">
+            <div class="lap-header">LAP TIMES</div>
+            <div class="lap-content">
+                <div class="lap-row">
+                    <span class="lap-label">CURRENT</span>
+                    <span class="lap-time" id="lapCurrent">00:00.000</span>
+                </div>
+                <div class="lap-row best">
+                    <span class="lap-label">BEST</span>
+                    <span class="lap-time" id="lapBest">00:00.000</span>
+                </div>
+                <div class="lap-row">
+                    <span class="lap-label">LAST</span>
+                    <span class="lap-time" id="lapLast">00:00.000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fuel Indicator (Bottom Center) -->
+        <div class="fuel-indicator" id="fuelIndicator">
+            <div class="fuel-icon">⛽</div>
+            <div class="fuel-content">
+                <div class="fuel-value" id="fuelValue">50.0L</div>
+                <div class="fuel-bar-mini">
+                    <div class="fuel-bar-fill" id="fuelBarFill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Track Info (Bottom Right) -->
+        <div class="track-info-widget" id="trackInfoWidget">
+            <div class="track-name" id="trackName">Track Name</div>
+            <div class="session-info">
+                <span class="session-lap">Lap <span id="sessionLap">1</span></span>
+            </div>
+        </div>
+
+        <!-- Connection Status (Top Left - small) -->
+        <div class="connection-status-mini" id="connectionStatus">
+            <span class="status-dot"></span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/overlay-sleek.js') }}"></script>
+</body>
+</html>

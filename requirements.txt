@@ -1,0 +1,8 @@
+# iRacing Broadcast Overlay Dependencies
+# Note: irsdk.py is included in this repository, no need to install pyirsdk separately
+
+PyYAML>=5.3
+Flask>=2.0.0
+Flask-SocketIO>=5.0.0
+python-socketio>=5.0.0
+eventlet>=0.30.0

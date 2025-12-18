@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iRacing Broadcast Producer Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/producer.css') }}">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏁 iRacing Broadcast Producer Panel</h1>
+            <div class="status-bar">
+                <div class="status-indicator" id="iracingStatus">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Disconnected</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Live Telemetry Section -->
+            <section class="panel telemetry-panel">
+                <h2>📊 Live Telemetry</h2>
+                <div class="telemetry-grid">
+                    <div class="telemetry-item">
+                        <span class="label">Speed</span>
+                        <span class="value" id="speed">0</span>
+                        <span class="unit">mph</span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="label">RPM</span>
+                        <span class="value" id="rpm">0</span>
+                        <span class="unit"></span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="label">Gear</span>
+                        <span class="value" id="gear">N</span>
+                        <span class="unit"></span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="label">Position</span>
+                        <span class="value" id="position">-</span>
+                        <span class="unit"></span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="label">Lap</span>
+                        <span class="value" id="lap">0</span>
+                        <span class="unit"></span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="label">Fuel</span>
+                        <span class="value" id="fuel">0.0</span>
+                        <span class="unit">L</span>
+                    </div>
+                    <div class="telemetry-item wide">
+                        <span class="label">Current Lap Time</span>
+                        <span class="value" id="lapCurrent">00:00.000</span>
+                    </div>
+                    <div class="telemetry-item wide">
+                        <span class="label">Best Lap Time</span>
+                        <span class="value" id="lapBest">00:00.000</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Overlay Controls Section -->
+            <section class="panel controls-panel">
+                <h2>🎛️ Overlay Controls</h2>
+                <div class="control-group">
+                    <h3>Overlay Style</h3>
+                    <div class="toggle-list">
+                        <label class="toggle">
+                            <input type="radio" name="overlayStyle" value="classic" checked>
+                            <span>Classic Overlay</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="radio" name="overlayStyle" value="sleek">
+                            <span>⭐ Sleek Overlay</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="radio" name="overlayStyle" value="nascar">
+                            <span>🏁 NASCAR Broadcast Style (Newest!)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group" id="classicControls">
+                    <h3>Classic Display Elements</h3>
+                    <div class="toggle-list">
+                        <label class="toggle">
+                            <input type="checkbox" id="showSpeed" checked>
+                            <span>Show Speed</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showRpm" checked>
+                            <span>Show RPM</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showGear" checked>
+                            <span>Show Gear</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showFuel" checked>
+                            <span>Show Fuel</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showPosition" checked>
+                            <span>Show Position</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showLapTime" checked>
+                            <span>Show Lap Time</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group hidden" id="sleekControls">
+                    <h3>Sleek Display Elements</h3>
+                    <div class="toggle-list">
+                        <label class="toggle">
+                            <input type="checkbox" id="showStandings" checked>
+                            <span>Show Standings Ticker</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showDriverInfo" checked>
+                            <span>Show Driver Info Widget</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showBattleBox" checked>
+                            <span>Show Battle Box</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showLapInfo" checked>
+                            <span>Show Lap Times</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showFuelSleek" checked>
+                            <span>Show Fuel Indicator</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showTrackInfo" checked>
+                            <span>Show Track Info</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group hidden" id="nascarControls">
+                    <h3>NASCAR Display Elements</h3>
+                    <div class="toggle-list">
+                        <label class="toggle">
+                            <input type="checkbox" id="showStandingsNascar" checked>
+                            <span>Show Standings Tower</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showDriverPanelNascar" checked>
+                            <span>Show Driver Info Panel</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showBattleBoxNascar" checked>
+                            <span>Show Battle Box</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showRaceInfoNascar" checked>
+                            <span>Show Race Info Bar</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>Quick Actions</h3>
+                    <div class="button-group">
+                        <a href="/overlay" target="_blank" class="btn btn-primary" id="openOverlayBtn">Open Classic Overlay</a>
+                        <button class="btn btn-secondary" id="copyOverlayUrl">Copy Overlay URL</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Camera Controls Section -->
+            <section class="panel camera-panel">
+                <h2>📹 Camera Controls</h2>
+                <div class="control-group">
+                    <label for="carNumber">Car Number:</label>
+                    <input type="number" id="carNumber" value="1" min="0" max="99">
+                    <button class="btn btn-primary" id="switchCamera">Switch to Car</button>
+                </div>
+                <div class="info-box">
+                    <p><strong>Note:</strong> Camera controls only work when connected to iRacing</p>
+                </div>
+            </section>
+
+            <!-- Info Section -->
+            <section class="panel info-panel">
+                <h2>ℹ️ OBS Setup Instructions</h2>
+                <ol>
+                    <li>Open OBS Studio</li>
+                    <li>Add a new <strong>Browser Source</strong></li>
+                    <li>Set the URL to: <code id="overlayUrl">http://localhost:5000/overlay</code></li>
+                    <li>Set Width: <strong>1920</strong> and Height: <strong>1080</strong></li>
+                    <li>Check <strong>"Shutdown source when not visible"</strong></li>
+                    <li>Check <strong>"Refresh browser when scene becomes active"</strong></li>
+                    <li>Click OK</li>
+                </ol>
+            </section>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/producer.js') }}"></script>
+</body>
+</html>
