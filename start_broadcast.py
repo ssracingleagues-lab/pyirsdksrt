@@ -14,7 +14,6 @@ def check_dependencies():
         'flask',
         'flask_socketio',
         'eventlet',
-        'irsdk',
     ]
     
     missing = []
@@ -23,6 +22,11 @@ def check_dependencies():
             __import__(package)
         except ImportError:
             missing.append(package)
+    
+    # Check if irsdk.py exists in current directory
+    if not os.path.exists('irsdk.py'):
+        print("Error: irsdk.py not found in current directory!")
+        return False
     
     if missing:
         print("Missing required packages:", ", ".join(missing))
