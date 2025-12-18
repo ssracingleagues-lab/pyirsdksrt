@@ -9,9 +9,11 @@ test_*.py
 *.ibt
 tutorial_*.py
 setup.cfg
-*.bat
 
 # Keep important text files
 !requirements.txt
 !vars.txt
 !README.txt
+
+# Keep important batch files
+!START_BROADCAST.bat
