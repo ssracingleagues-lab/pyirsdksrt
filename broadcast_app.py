@@ -4,16 +4,15 @@ iRacing Broadcast Overlay Application
 A web-based broadcast overlay system for iRacing with OBS integration
 """
 
+import eventlet
+eventlet.monkey_patch()
+
 import irsdk
 import time
 import json
 from flask import Flask, render_template, jsonify, request
 from flask_socketio import SocketIO, emit
-import eventlet
 from threading import Thread, Lock
-
-# Monkey patch for eventlet
-eventlet.monkey_patch()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'iracing-broadcast-overlay-secret'
