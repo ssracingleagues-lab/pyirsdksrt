@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>iRacing Broadcast Overlay</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay.css') }}">
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="overlay-container">
+        <!-- Top Bar - Position and Track Info -->
+        <div class="top-bar" id="topBar">
+            <div class="position-indicator" id="positionDisplay">
+                <span class="position-label">P</span>
+                <span class="position-value" id="position">1</span>
+            </div>
+            <div class="track-info" id="trackInfo">
+                <span id="trackName">Waiting for data...</span>
+            </div>
+        </div>
+
+        <!-- Bottom Left - Speed and RPM -->
+        <div class="bottom-left" id="bottomLeft">
+            <div class="speed-display" id="speedDisplay">
+                <div class="speed-value" id="speed">0</div>
+                <div class="speed-unit">MPH</div>
+            </div>
+            
+            <div class="gear-display" id="gearDisplay">
+                <div class="gear-value" id="gear">N</div>
+            </div>
+
+            <div class="rpm-bar-container" id="rpmDisplay">
+                <div class="rpm-bar" id="rpmBar"></div>
+                <div class="rpm-value" id="rpm">0</div>
+            </div>
+        </div>
+
+        <!-- Bottom Right - Fuel and Lap Times -->
+        <div class="bottom-right" id="bottomRight">
+            <div class="fuel-display" id="fuelDisplay">
+                <div class="fuel-label">FUEL</div>
+                <div class="fuel-value" id="fuel">0.0L</div>
+                <div class="fuel-bar-container">
+                    <div class="fuel-bar" id="fuelBar"></div>
+                </div>
+            </div>
+
+            <div class="lap-times" id="lapTimeDisplay">
+                <div class="lap-time-row">
+                    <span class="lap-label">CURRENT:</span>
+                    <span class="lap-value" id="lapCurrent">00:00.000</span>
+                </div>
+                <div class="lap-time-row">
+                    <span class="lap-label">BEST:</span>
+                    <span class="lap-value highlight" id="lapBest">00:00.000</span>
+                </div>
+                <div class="lap-time-row">
+                    <span class="lap-label">LAST:</span>
+                    <span class="lap-value" id="lapLast">00:00.000</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connection Status Indicator -->
+        <div class="connection-status" id="connectionStatus">
+            <span class="status-dot"></span>
+            <span class="status-text">Connecting...</span>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/overlay.js') }}"></script>
+</body>
+</html>
