@@ -167,12 +167,14 @@ header h1 {
     user-select: none;
 }
 
-.toggle input[type="checkbox"] {
+.toggle input[type="checkbox"],
+.toggle input[type="radio"] {
     width: 20px;
     height: 20px;
     margin-right: 10px;
     cursor: pointer;
     accent-color: #667eea;
+}
 }
 
 .toggle span {
@@ -308,4 +310,9 @@ header h1 {
     .telemetry-item.wide {
         grid-column: span 1;
     }
+}
+
+/* Hidden class for toggling elements */
+.hidden {
+    display: none !important;
 }

@@ -69,7 +69,21 @@
             <section class="panel controls-panel">
                 <h2>🎛️ Overlay Controls</h2>
                 <div class="control-group">
-                    <h3>Display Elements</h3>
+                    <h3>Overlay Style</h3>
+                    <div class="toggle-list">
+                        <label class="toggle">
+                            <input type="radio" name="overlayStyle" value="classic" checked>
+                            <span>Classic Overlay</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="radio" name="overlayStyle" value="sleek">
+                            <span>⭐ Sleek Overlay (New!)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group" id="classicControls">
+                    <h3>Classic Display Elements</h3>
                     <div class="toggle-list">
                         <label class="toggle">
                             <input type="checkbox" id="showSpeed" checked>
@@ -98,10 +112,40 @@
                     </div>
                 </div>
 
+                <div class="control-group hidden" id="sleekControls">
+                    <h3>Sleek Display Elements</h3>
+                    <div class="toggle-list">
+                        <label class="toggle">
+                            <input type="checkbox" id="showStandings" checked>
+                            <span>Show Standings Ticker</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showDriverInfo" checked>
+                            <span>Show Driver Info Widget</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showBattleBox" checked>
+                            <span>Show Battle Box</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showLapInfo" checked>
+                            <span>Show Lap Times</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showFuelSleek" checked>
+                            <span>Show Fuel Indicator</span>
+                        </label>
+                        <label class="toggle">
+                            <input type="checkbox" id="showTrackInfo" checked>
+                            <span>Show Track Info</span>
+                        </label>
+                    </div>
+                </div>
+
                 <div class="control-group">
                     <h3>Quick Actions</h3>
                     <div class="button-group">
-                        <a href="/overlay" target="_blank" class="btn btn-primary">Open Overlay in Browser</a>
+                        <a href="/overlay" target="_blank" class="btn btn-primary" id="openOverlayBtn">Open Classic Overlay</a>
                         <button class="btn btn-secondary" id="copyOverlayUrl">Copy Overlay URL</button>
                     </div>
                 </div>

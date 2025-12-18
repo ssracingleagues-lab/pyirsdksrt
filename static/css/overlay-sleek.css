@@ -1,0 +1,519 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+    background: transparent;
+    overflow: hidden;
+    width: 1920px;
+    height: 1080px;
+}
+
+.overlay-container {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    color: white;
+}
+
+/* Standings Ticker - Top */
+.standings-ticker {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 500px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 40, 0.9) 100%);
+    border-left: 4px solid #00d4ff;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+}
+
+.ticker-header {
+    background: linear-gradient(90deg, #00d4ff 0%, #0088ff 100%);
+    color: white;
+    padding: 8px 15px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.ticker-content {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 5px 0;
+}
+
+.ticker-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.ticker-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.ticker-content::-webkit-scrollbar-thumb {
+    background: #00d4ff;
+    border-radius: 2px;
+}
+
+.ticker-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.2s;
+}
+
+.ticker-item:hover {
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.ticker-pos {
+    font-weight: 700;
+    color: #00d4ff;
+    width: 35px;
+    font-size: 18px;
+}
+
+.ticker-name {
+    flex: 1;
+    font-weight: 600;
+}
+
+.ticker-gap {
+    color: #ffd700;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Driver Info Widget - Top Right */
+.driver-info {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 280px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(40, 20, 40, 0.9) 100%);
+    border-right: 4px solid #ff0080;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(255, 0, 128, 0.3);
+}
+
+.driver-header {
+    background: linear-gradient(90deg, #ff0080 0%, #ff00ff 100%);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.driver-pos {
+    font-weight: 700;
+    font-size: 24px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.driver-name {
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.driver-stats {
+    padding: 15px;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    width: 60px;
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-weight: 700;
+    font-size: 20px;
+    color: #00ffaa;
+    flex: 1;
+    text-align: right;
+}
+
+.stat-value.large {
+    font-size: 32px;
+    color: #ffd700;
+}
+
+.stat-unit {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-left: 5px;
+    width: 35px;
+}
+
+.rpm-mini-bar {
+    flex: 1;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.rpm-mini-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(to right, #00ff88 0%, #ffdd00 50%, #ff0044 100%);
+    transition: width 0.1s linear;
+}
+
+/* Battle Box - Middle Right */
+.battle-box {
+    position: absolute;
+    top: 380px;
+    right: 20px;
+    width: 300px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(40, 40, 20, 0.9) 100%);
+    border-right: 4px solid #ffd700;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.3);
+}
+
+.battle-header {
+    background: linear-gradient(90deg, #ffd700 0%, #ffaa00 100%);
+    color: #000;
+    padding: 8px 15px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.battle-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.battle-driver {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+}
+
+.battle-driver.ahead {
+    border-left: 3px solid #00ff88;
+}
+
+.battle-driver.behind {
+    border-left: 3px solid #ff4444;
+}
+
+.battle-pos {
+    font-weight: 700;
+    font-size: 18px;
+    color: #ffd700;
+    width: 40px;
+}
+
+.battle-name {
+    flex: 1;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.battle-speed {
+    font-weight: 700;
+    font-size: 20px;
+    color: #00d4ff;
+    margin-right: 5px;
+}
+
+.battle-unit {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.battle-delta {
+    text-align: center;
+    padding: 10px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 5px;
+}
+
+.delta-icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.delta-value {
+    font-weight: 700;
+    font-size: 18px;
+    color: #ffd700;
+}
+
+.delta-projection {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 3px;
+}
+
+/* Lap Info - Bottom Left */
+.lap-info {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 300px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 40, 20, 0.9) 100%);
+    border-left: 4px solid #00ff88;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+}
+
+.lap-header {
+    background: linear-gradient(90deg, #00ff88 0%, #00cc88 100%);
+    color: #000;
+    padding: 8px 15px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+.lap-content {
+    padding: 15px;
+}
+
+.lap-row {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 5px;
+}
+
+.lap-row:last-child {
+    margin-bottom: 0;
+}
+
+.lap-row.best {
+    background: rgba(0, 255, 136, 0.1);
+    border-left: 3px solid #ffd700;
+}
+
+.lap-label {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    width: 80px;
+    letter-spacing: 1px;
+}
+
+.lap-time {
+    font-weight: 700;
+    font-size: 18px;
+    font-family: 'Courier New', monospace;
+    color: #00ffaa;
+    flex: 1;
+    text-align: right;
+}
+
+.lap-row.best .lap-time {
+    color: #ffd700;
+}
+
+/* Fuel Indicator - Bottom Center */
+.fuel-indicator {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(40, 20, 20, 0.9) 100%);
+    border-bottom: 4px solid #ff6600;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(255, 102, 0, 0.3);
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.fuel-icon {
+    font-size: 32px;
+}
+
+.fuel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.fuel-value {
+    font-weight: 700;
+    font-size: 20px;
+    color: #ff9944;
+}
+
+.fuel-bar-mini {
+    width: 120px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.fuel-bar-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, #ff0000 0%, #ffaa00 50%, #00ff88 100%);
+    transition: width 0.3s;
+}
+
+/* Track Info - Bottom Right */
+.track-info-widget {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 20, 40, 0.9) 100%);
+    border-right: 4px solid #00d4ff;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+    padding: 15px 20px;
+    text-align: right;
+}
+
+.track-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: #00d4ff;
+    margin-bottom: 5px;
+}
+
+.session-info {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.session-lap {
+    font-weight: 600;
+}
+
+/* Connection Status - Top Left Mini */
+.connection-status-mini {
+    position: absolute;
+    top: 20px;
+    left: 540px;
+    width: 40px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+}
+
+.status-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #dc3545;
+    animation: pulse 2s infinite;
+}
+
+.connection-status-mini.connected .status-dot {
+    background: #28a745;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Hidden class for toggling */
+.hidden {
+    display: none !important;
+}
+
+/* Animations */
+@keyframes slideInTop {
+    from {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInBottom {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.standings-ticker {
+    animation: slideInTop 0.5s ease-out;
+}
+
+.driver-info {
+    animation: slideInRight 0.5s ease-out;
+}
+
+.battle-box {
+    animation: slideInRight 0.6s ease-out;
+}
+
+.lap-info {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+.fuel-indicator {
+    animation: slideInBottom 0.5s ease-out;
+}
+
+.track-info-widget {
+    animation: slideInBottom 0.6s ease-out;
+}

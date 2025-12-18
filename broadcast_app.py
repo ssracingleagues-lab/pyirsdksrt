@@ -122,8 +122,13 @@ def index():
 
 @app.route('/overlay')
 def overlay():
-    """OBS browser source overlay"""
+    """OBS browser source overlay - Classic"""
     return render_template('overlay.html')
+
+@app.route('/overlay-sleek')
+def overlay_sleek():
+    """OBS browser source overlay - Sleek"""
+    return render_template('overlay-sleek.html')
 
 @app.route('/api/status')
 def api_status():

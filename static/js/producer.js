@@ -84,6 +84,29 @@ function formatTime(seconds) {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}.${ms.toString().padStart(3, '0')}`;
 }
 
+// Overlay style switching
+const overlayStyleRadios = document.querySelectorAll('input[name="overlayStyle"]');
+const classicControls = document.getElementById('classicControls');
+const sleekControls = document.getElementById('sleekControls');
+const openOverlayBtn = document.getElementById('openOverlayBtn');
+
+overlayStyleRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const style = e.target.value;
+        if (style === 'classic') {
+            classicControls.classList.remove('hidden');
+            sleekControls.classList.add('hidden');
+            openOverlayBtn.href = '/overlay';
+            openOverlayBtn.textContent = 'Open Classic Overlay';
+        } else {
+            classicControls.classList.add('hidden');
+            sleekControls.classList.remove('hidden');
+            openOverlayBtn.href = '/overlay-sleek';
+            openOverlayBtn.textContent = 'Open Sleek Overlay';
+        }
+    });
+});
+
 // Overlay settings controls
 const settingCheckboxes = {
     showSpeed: document.getElementById('showSpeed'),
@@ -94,12 +117,31 @@ const settingCheckboxes = {
     showLapTime: document.getElementById('showLapTime'),
 };
 
-// Listen for checkbox changes
+const sleekSettingCheckboxes = {
+    showStandings: document.getElementById('showStandings'),
+    showDriverInfo: document.getElementById('showDriverInfo'),
+    showBattleBox: document.getElementById('showBattleBox'),
+    showLapInfo: document.getElementById('showLapInfo'),
+    showFuelSleek: document.getElementById('showFuelSleek'),
+    showTrackInfo: document.getElementById('showTrackInfo'),
+};
+
+// Listen for checkbox changes - Classic
 Object.keys(settingCheckboxes).forEach(key => {
     const checkbox = settingCheckboxes[key];
     if (checkbox) {
         checkbox.addEventListener('change', () => {
             updateSettings();
+        });
+    }
+});
+
+// Listen for checkbox changes - Sleek
+Object.keys(sleekSettingCheckboxes).forEach(key => {
+    const checkbox = sleekSettingCheckboxes[key];
+    if (checkbox) {
+        checkbox.addEventListener('change', () => {
+            updateSleekSettings();
         });
     }
 });
@@ -123,12 +165,32 @@ function updateSettings() {
     }).catch(err => console.error('Error updating settings:', err));
 }
 
+function updateSleekSettings() {
+    const settings = {};
+    Object.keys(sleekSettingCheckboxes).forEach(key => {
+        const checkbox = sleekSettingCheckboxes[key];
+        if (checkbox) {
+            const settingKey = key.replace(/([A-Z])/g, '_$1').toLowerCase();
+            settings[settingKey] = checkbox.checked;
+        }
+    });
+    
+    // Send to server
+    fetch('/api/settings', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(settings),
+    }).catch(err => console.error('Error updating settings:', err));
+}
+
 // Settings update from server
 socket.on('settings_update', (settings) => {
     // Update checkboxes based on server settings
     Object.keys(settings).forEach(key => {
         const camelKey = key.replace(/_([a-z])/g, (g) => g[1].toUpperCase());
-        const checkbox = settingCheckboxes[camelKey];
+        const checkbox = settingCheckboxes[camelKey] || sleekSettingCheckboxes[camelKey];
         if (checkbox) {
             checkbox.checked = settings[key];
         }
